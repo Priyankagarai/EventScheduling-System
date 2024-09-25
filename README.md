@@ -54,8 +54,7 @@ cd ../server
 node index.js
 Access the App:
 
-Frontend will be running on: http://localhost:3000
-Backend will be running on: http://localhost:5000
+Frontend will be running on: http://localhost:5173
 
 
 ***Usage***
