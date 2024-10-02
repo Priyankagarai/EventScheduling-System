@@ -15,7 +15,7 @@ function Login() {
                 localStorage.setItem('userId', result.data._id);
                 navigate('/Adddata');
             } else {
-                // Handle other response data if needed
+               
                 console.log('Login failed:', result.data);
             }
         } catch (error) {
