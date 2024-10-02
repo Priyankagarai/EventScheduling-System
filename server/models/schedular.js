@@ -19,16 +19,16 @@ const WeeklyScheduleSchema = new Schema({
 });
 
 const MeetingTimeSchema = new Schema({
-  date: String,  // Store as a string in 'YYYY-MM-DD' format
-  startTime: String,  // Store time as 'HH:mm'
-  endTime: String     // Store time as 'HH:mm'
+  date: String,  
+  startTime: String, 
+  endTime: String    
 });
 // Define the user schema
 const ScheduleUserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
-  timeSlots: { type: WeeklyScheduleSchema, default: {} },// Default to an empty schedule
+  timeSlots: { type: WeeklyScheduleSchema, default: {} },
   meetingtime:{type: MeetingTimeSchema, default:{}}
 });
 
