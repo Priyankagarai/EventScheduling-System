@@ -26,23 +26,22 @@ const Adddata: React.FC = () => {
       });
 
 
-        // State to track editing slot (day and index)
          const [editingSlot, setEditingSlot] = useState<{ day: string, index: number } | null>(null);
          const [editedSlot, setEditedSlot] = useState<TimeSlot>({ startTime: '', endTime: '' });
 
 
     useEffect(() => {
-        // Retrieve the userId from localStorage
+        
         const userId = localStorage.getItem('userId');
 
         if (userId) {
-            // Fetch user data from backend using the stored userId
+          
             const fetchUserData = async () => {
                 try {
                     const response = await axios.post('http://localhost:3001/Adddata', { _id: userId });
                     if (response.data.success && response.data.schedule) {
                         setSchedule(response.data.schedule);
-                        setUserData(response.data);// Store the user data in state
+                        setUserData(response.data);
                       
                         
                         
@@ -61,11 +60,11 @@ const Adddata: React.FC = () => {
     }, []);
   
     const deleteTimeSlot = async (day: string, index: number) => {
-      const userId = localStorage.getItem('userId'); // Assuming the userId is stored here
-      const slotToDelete = schedule[day][index]; // Get the time slot to delete
+      const userId = localStorage.getItem('userId'); 
+      const slotToDelete = schedule[day][index]; 
     
       try {
-        // Send a delete request to the backend
+
         const response = await axios.post('http://localhost:3001/deleteslot', {
           userId,
           day,
@@ -74,7 +73,7 @@ const Adddata: React.FC = () => {
         });
     
         if (response.data.success) {
-          // Update the state only if the deletion was successful
+          
           const updatedDaySchedule = [...schedule[day]];
           updatedDaySchedule.splice(index, 1);
     
@@ -127,7 +126,7 @@ const Adddata: React.FC = () => {
             [day]: updatedDaySchedule,
           });
           
-          setEditingSlot(null); // Exit edit mode after successful save
+          setEditingSlot(null); 
         } else {
           console.log('Failed to update time slot');
         }
