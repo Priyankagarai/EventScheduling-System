@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-// Define types for time slots and the weekly schedule
+
 interface TimeSlot {
   startTime: string;
   endTime: string;
@@ -13,7 +13,7 @@ interface WeeklySchedule {
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const Updatedata: React.FC = () => {
-  // State: Manage the free time schedule for each day of the week
+ 
   const [schedule, setSchedule] = useState<WeeklySchedule>({
     Sunday: [],
     Monday: [],
@@ -26,7 +26,7 @@ const Updatedata: React.FC = () => {
 
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
-  // Function to add a new time slot for the selected day
+ 
   const addTimeSlot = (day: string) => {
     if (schedule && schedule[day]) {
       setSchedule(prevSchedule => ({
@@ -38,7 +38,7 @@ const Updatedata: React.FC = () => {
     }
   };
 
-  // Function to remove a time slot by index for a specific day
+  
   const removeTimeSlot = (day: string, index: number) => {
     if (schedule && schedule[day]) {
       setSchedule(prevSchedule => ({
@@ -50,7 +50,6 @@ const Updatedata: React.FC = () => {
     }
   };
 
-  // Function to update the time slot (start or end) for a specific day
   const updateTimeSlot = (day: string, index: number, type: keyof TimeSlot, value: string) => {
     if (schedule && schedule[day] && schedule[day][index]) {
       setSchedule(prevSchedule => ({
@@ -62,9 +61,8 @@ const Updatedata: React.FC = () => {
     }
   };
 
-  // Function to validate that the end time is after the start time
   const validateTime = (startTime: string, endTime: string): boolean => {
-    if (!startTime || !endTime) return true; // Ensure both times are filled before validating
+    if (!startTime || !endTime) return true; 
     return new Date(`1970-01-01T${endTime}`) > new Date(`1970-01-01T${startTime}`);
   };
 
@@ -75,8 +73,8 @@ const Updatedata: React.FC = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/Updatedata', {
-        userId: userId,  // Pass the user ID or retrieve it dynamically
-        schedule: schedule // Send the schedule object
+        userId: userId, 
+        schedule: schedule 
       });
 
       if (response.status === 200 || response.status === 201) {
@@ -90,7 +88,7 @@ const Updatedata: React.FC = () => {
     }
   };
 
-  // Render the time slots for the selected day
+
   const renderDaySlots = (day: string) => (
     <div key={day}>
       <br></br><h3 className='font-bold text-lg'>Free Times for {day}</h3>
