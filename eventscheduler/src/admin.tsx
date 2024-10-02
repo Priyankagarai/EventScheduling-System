@@ -11,7 +11,7 @@ interface WeeklySchedule {
 }
 
 interface MeetingSchedule {
-  date: string;  // Store the day of the week instead of full date
+  date: string;  
   startTime: string;
   endTime: string;
 }
@@ -21,7 +21,7 @@ interface User {
   email: string;
   name: string;
   timeSlots: WeeklySchedule;
-  meetingtime: MeetingSchedule;  // Optional meeting time
+  meetingtime: MeetingSchedule; 
 }
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -48,9 +48,9 @@ const Admin: React.FC = () => {
     try {
       await axios.post('http://localhost:3001/bookTime', { userId, day, startTime, endTime });
       alert('Meeting time successfully booked');
-      // Instead of refetching, you can update the user's state directly if needed.
+      
       const response = await axios.get('http://localhost:3001/Admin');
-      setUsers(response.data.users);  // Re-fetch all users after booking
+      setUsers(response.data.users); 
     } catch (err) {
       console.error(err);
       alert('Error booking time');
