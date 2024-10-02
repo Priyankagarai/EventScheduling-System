@@ -18,16 +18,16 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Clear previous errors
+    
     setErrors([]);
     
-    // Simple client-side validation
+   
     const newErrors: string[] = [];
     if (!formData.email || !formData.password || !formData.name) {
       newErrors.push('All fields are required.');
     }
 
-    // If there are errors, set them and return
+    
     if (newErrors.length > 0) {
       setErrors(newErrors);
       return;
