@@ -1,7 +1,7 @@
-const express = require('express'); // No type imports in JS
+const express = require('express'); 
 const mongoose = require('mongoose');
 const cors = require('cors');
-const ScheduleModel = require('./models/schedular'); // Assuming the model file is named schedular.js
+const ScheduleModel = require('./models/schedular'); 
 
 const app = express();
 app.use(express.json());
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/schedular')
     try {
       const { email, password, name } = req.body;
       
-      // Create new user
+     
       const users = new ScheduleModel({ email, password, name });
       
       await users.save();
@@ -71,11 +71,11 @@ app.post('/editslot', async (req, res) => {
       return res.status(404).send('Time slot not found.');
     }
 
-    // Update the time slot
+
     user.timeSlots[day][slotIndex].startTime = newStartTime;
     user.timeSlots[day][slotIndex].endTime = newEndTime;
 
-    // Save the updated document
+ 
     await user.save();
     res.status(200).send('Time slot updated successfully.');
   } catch (error) {
@@ -88,25 +88,25 @@ app.post('/deleteslot', async (req, res) => {
   const { userId, day, startTime, endTime } = req.body;
 
   try {
-    // Find the user by ID
+   
     const user = await ScheduleModel.findById(userId).exec();
 
-    // Check if the user exists
+   
     if (!user) {
       return res.status(404).send('User not found.');
     }
 
-    // Check if the day exists in the user's schedule
+ 
     if (!user.timeSlots[day]) {
       return res.status(400).send('Day not found in the schedule.');
     }
 
-    // Filter out the time slot with the matching startTime and endTime
+  
     user.timeSlots[day] = user.timeSlots[day].filter(slot => {
       return !(slot.startTime === startTime && slot.endTime === endTime);
     });
 
-    // Save the updated user document
+    
     await user.save();
     res.json({ success: true});    
   } catch (error) {
@@ -121,27 +121,22 @@ app.post('/Updatedata', async (req, res) => {
   const { userId, schedule } = req.body;
 
   try {
-    // Find the user by ID
+  
     const user = await ScheduleModel.findById(userId).exec();
 
-    // Check if user exists
+  
     if (!user) {
       return res.status(404).send('User not found.');
     }
 
-    // Ensure user.timeSlots is an object (not an array or undefined)
-    //if (typeof user.timeSlots !== 'object' || Array.isArray(user.timeSlots)) {
-    //  return res.status(500).send('User timeSlots data is not valid.');
-    //}
-
-    // Update time slots for each day
+  
     Object.keys(schedule).forEach(day => {
       if (schedule.hasOwnProperty(day)) {
         user.timeSlots[day] = [...(user.timeSlots[day] || []), ...schedule[day]];
       }
     });
 
-    // Save updated user document
+ 
     await user.save();
     res.status(200).send('Time slots updated successfully.');
   } catch (error) {
@@ -155,8 +150,8 @@ app.post('/Updatedata', async (req, res) => {
 app.post("/Login", async (req, res) => {
     const { email, password } = req.body;
     console.log('Request body:', req.body);
-    console.log('Received email:', email); // Log email to check
-    console.log('Received password:', password); // Log password to check
+    console.log('Received email:', email); 
+    console.log('Received password:', password); 
 
 
     try {
@@ -182,13 +177,12 @@ app.post("/Login", async (req, res) => {
     }
 });
 
-//admin 
-// server.js or app.js
+
 
 app.get('/Admin', async (req, res) => {
   try {
-    const users = await ScheduleModel.find();  // Adjust query if needed
-    res.json({ users });  // No need to send schedule separately
+    const users = await ScheduleModel.find();  
+    res.json({ users }); 
     console.log(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -199,19 +193,19 @@ app.post('/bookTime', async (req, res) => {
   const { userId, day, startTime, endTime } = req.body;
 
   try {
-    // Find the user by ID
+
     const user = await ScheduleModel.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Save the meeting time using the provided day, startTime, and endTime
+  
     user.meetingtime = {date: day, startTime, endTime };
     
     
 
-    // Save the updated user
+ 
     await user.save();
 
     return res.json({ message: 'Meeting time successfully booked' });
